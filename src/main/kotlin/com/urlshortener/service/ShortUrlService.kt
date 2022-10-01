@@ -38,10 +38,10 @@ class ShortUrlService (val shortUrlRepository: ShortUrlRepository) {
         return if (shortUrl.shortUrl.isNullOrEmpty()) {
             createShortUrl(shortUrl.longUrl)
         } else {
-            try {
+            if (shortUrlRepository.findById(shortUrl.shortUrl).isEmpty) {
                 shortUrlRepository.save(shortUrl)
-            } catch(e: Exception) {
-                throw (ShortUrlAlreadyExistException("ShortUrl/identifier $"))
+            } else {
+                throw (ShortUrlAlreadyExistException("ShortUrl/identifier ${shortUrl.shortUrl} already exists"))
             }
         }
     }
@@ -49,7 +49,7 @@ class ShortUrlService (val shortUrlRepository: ShortUrlRepository) {
     fun createHash(plainText: String): String {
         val bytes = MessageDigest
             .getInstance("MD5")
-            .digest(plainText.toByteArray())
+            .digest(plainText.toByteArray(Charsets.UTF_8))
 
         return DatatypeConverter.printHexBinary(bytes)
     }
