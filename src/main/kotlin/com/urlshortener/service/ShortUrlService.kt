@@ -14,12 +14,12 @@ class ShortUrlService (val shortUrlRepository: ShortUrlRepository) {
 
     fun getAllUrls(): List<ShortUrl> = shortUrlRepository.findAll().toList()
 
-    fun getUrlWithShort(short: String): ShortUrl = shortUrlRepository.findById(short).orElseThrow {
+    fun getUrlWithShort(short: String): ShortUrl = shortUrlRepository.findByShortUrl(short).orElseThrow {
         UrlNotFoundException("Unable to find a stored url with the given short url: $short")
     }
 
     fun createShortUrl(longUrl: String): ShortUrl {
-        val optExistingUrl = shortUrlRepository.findByLongUrl(longUrl)
+        val optExistingUrl = shortUrlRepository.findFirstByLongUrl(longUrl)
 
         // use existing entry or create a new one
         return if (optExistingUrl.isPresent) {
@@ -29,7 +29,7 @@ class ShortUrlService (val shortUrlRepository: ShortUrlRepository) {
             do {
                 // use random number to avoid accidental recreation of a key and shorten the key
                 short = createHash(longUrl + Random.nextInt(0, 10)).take(10)
-                val optNewShort = shortUrlRepository.findById(short)
+                val optNewShort = shortUrlRepository.findByShortUrl(short)
             } while(optNewShort.isPresent)
             shortUrlRepository.save(ShortUrl(short, longUrl))
         }
@@ -39,7 +39,7 @@ class ShortUrlService (val shortUrlRepository: ShortUrlRepository) {
         return if (shortUrl.shortUrl.isEmpty()) {
             createShortUrl(shortUrl.longUrl)
         } else {
-            if (shortUrlRepository.findById(shortUrl.shortUrl).isEmpty) {
+            if (shortUrlRepository.findByShortUrl(shortUrl.shortUrl).isEmpty) {
                 shortUrlRepository.save(shortUrl)
             } else {
                 throw (ShortUrlAlreadyExistException("ShortUrl/identifier ${shortUrl.shortUrl} already exists"))

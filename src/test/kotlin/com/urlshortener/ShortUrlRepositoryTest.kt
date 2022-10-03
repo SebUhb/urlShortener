@@ -35,7 +35,7 @@ class ShortUrlRepositoryTest {
         entityManager.persist(shortUrl)
         entityManager.flush()
 
-        val found = shortUrlRepository.findById(shortUrl.shortUrl).get()
+        val found = shortUrlRepository.findByShortUrl(shortUrl.shortUrl).get()
         assertThat(found).isEqualTo(shortUrl)
     }
 
@@ -45,7 +45,7 @@ class ShortUrlRepositoryTest {
         entityManager.persist(shortUrl)
         entityManager.flush()
 
-        val found = shortUrlRepository.findByLongUrl(shortUrl.longUrl).get()
+        val found = shortUrlRepository.findFirstByLongUrl(shortUrl.longUrl).get()
         assertThat(found).isEqualTo(shortUrl)
     }
 }

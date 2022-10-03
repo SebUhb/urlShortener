@@ -9,11 +9,9 @@ import java.util.*
 interface ShortUrlRepository : CrudRepository<ShortUrl, String> {
     override fun findAll(): List<ShortUrl>
 
-    override fun findById(id: String): Optional<ShortUrl>
+    fun findByShortUrl(shortUrl: String): Optional<ShortUrl>
 
-    override fun <S : ShortUrl?> save(entity: S): S
+    override fun <S : ShortUrl> save(entity: S): S
 
-    override fun deleteById(id: String)
-
-    fun findByLongUrl(longUrl: String): Optional<ShortUrl>
+    fun findFirstByLongUrl(longUrl: String): Optional<ShortUrl>
 }

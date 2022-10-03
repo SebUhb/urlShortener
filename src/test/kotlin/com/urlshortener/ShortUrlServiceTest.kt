@@ -17,11 +17,11 @@ class ShortUrlServiceTest {
     @Test
     fun `when get shortUrl with ID then return Short Url`() {
         val shortUrl = ShortUrl("1", "www.test.de")
-        every { shortUrlRepository.findById("1") } returns Optional.of(shortUrl)
+        every { shortUrlRepository.findByShortUrl("1") } returns Optional.of(shortUrl)
 
         val result = shortUrlService.getUrlWithShort("1")
 
-        verify(exactly = 1) { shortUrlRepository.findById("1") }
+        verify(exactly = 1) { shortUrlRepository.findByShortUrl("1") }
         assertEquals(shortUrl, result)
     }
 }
