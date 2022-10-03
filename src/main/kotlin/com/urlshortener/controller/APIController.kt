@@ -10,18 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api/shorturl")
 class ApiController (val shortUrlService: ShortUrlService) {
 
-    @GetMapping("/shorturl")
+    @GetMapping("/")
     fun findAll(): List<ShortUrl> = shortUrlService.getAllUrls()
 
-    @GetMapping("/shorturl/{short}")
+    @GetMapping("/{short}")
     fun findOne(@PathVariable short: String): ShortUrl = shortUrlService.getUrlWithShort(short)
 
-    @PostMapping("/shorturl/{longUrl}")
+    @PostMapping("/{longUrl}")
     fun storeUrl(@PathVariable longUrl: String): ShortUrl = shortUrlService.createShortUrl(longUrl)
 
-    @PostMapping("/shorturl/")
+    @PostMapping("/")
     fun storeUrl(@RequestBody shortUrl: ShortUrl): ShortUrl = shortUrlService.createShortUrl(shortUrl)
 
 }

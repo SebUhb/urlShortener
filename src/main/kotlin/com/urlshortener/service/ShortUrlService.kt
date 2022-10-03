@@ -21,13 +21,14 @@ class ShortUrlService (val shortUrlRepository: ShortUrlRepository) {
     fun createShortUrl(longUrl: String): ShortUrl {
         val optExistingUrl = shortUrlRepository.findByLongUrl(longUrl)
 
+        // use existing entry or create a new one
         return if (optExistingUrl.isPresent) {
             optExistingUrl.get()
         } else {
             var short: String
             do {
-                // avoid creating of the same hash again
-                short = createHash(longUrl + Random.nextInt(0, 10))
+                // use random number to avoid accidental recreation of a key and shorten the key
+                short = createHash(longUrl + Random.nextInt(0, 10)).take(10)
                 val optNewShort = shortUrlRepository.findById(short)
             } while(optNewShort.isPresent)
             shortUrlRepository.save(ShortUrl(short, longUrl))
@@ -35,7 +36,7 @@ class ShortUrlService (val shortUrlRepository: ShortUrlRepository) {
     }
 
     fun createShortUrl(shortUrl: ShortUrl): ShortUrl {
-        return if (shortUrl.shortUrl.isNullOrEmpty()) {
+        return if (shortUrl.shortUrl.isEmpty()) {
             createShortUrl(shortUrl.longUrl)
         } else {
             if (shortUrlRepository.findById(shortUrl.shortUrl).isEmpty) {
