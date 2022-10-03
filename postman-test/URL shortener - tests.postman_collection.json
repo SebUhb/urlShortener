@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "83e47544-2d0b-49cc-873e-dc85e7f21bde",
+		"name": "URL shortener - tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20911684"
+	},
+	"item": [
+		{
+			"name": "List all entries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/shorturl/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shorturl",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get entry with shortUrl - No Entry Error",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/shorturl/1234567890",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shorturl",
+						"1234567890"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add entry with path",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/shorturl/www.test.de",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shorturl",
+						"www.test.de"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add entry with path duplicate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/shorturl/www.test.de",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shorturl",
+						"www.test.de"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add entry with body",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shortUrl\": \"1234567890\",\r\n    \"longUrl\": \"www.test.de\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/shorturl/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shorturl",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add entry with body duplicate - unique shortUrl Error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shortUrl\": \"1234567890\",\r\n    \"longUrl\": \"www.test.de\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/shorturl/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shorturl",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all entries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/shorturl/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shorturl",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get entry with shortUrl",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/shorturl/1234567890",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shorturl",
+						"1234567890"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
