@@ -47,6 +47,7 @@ class ShortUrlService (val shortUrlRepository: ShortUrlRepository) {
         }
     }
 
+    // as used in https://www.javacodemonk.com/md5-and-sha256-in-java-kotlin-and-android-96ed9628
     fun createHash(plainText: String): String {
         val bytes = MessageDigest
             .getInstance("MD5")
